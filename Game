@@ -1,0 +1,92 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the display
+width, height = 800, 800
+window = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Chess Game')
+
+# Colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    window.fill(white)
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
+ def draw_board():
+    colors = [white, black]
+    tile_size = width // 8
+    for row in range(8):
+        for col in range(8):
+            color = colors[(row + col) % 2]
+            pygame.draw.rect(window, color, pygame.Rect(col * tile_size, row * tile_size, tile_size, tile_size))
+
+# Update the main loop to call draw_board
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    draw_board()
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
+   # Load images
+pieces = {
+    'bR': pygame.image.load('images/bR.png'),
+    'bN': pygame.image.load('images/bN.png'),
+    # Add other pieces...
+}
+
+def draw_pieces(board):
+    tile_size = width // 8
+    for row in range(8):
+        for col in range(8):
+            piece = board[row][col]
+            if piece != '--':
+                window.blit(pieces[piece], pygame.Rect(col * tile_size, row * tile_size, tile_size, tile_size))
+
+# Example board setup
+board = [
+    ['bR', 'bN', '--', '--', '--', '--', 'wN', 'wR'],
+    # Add other rows...
+]
+
+# Update the main loop to call draw_pieces
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    draw_board()
+    draw_pieces(board)
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
+       def is_valid_move(board, start_pos, end_pos):
+    # Implement the logic to check if a move is valid
+    pass
+
+def move_piece(board, start_pos, end_pos):
+    if is_valid_move(board, start_pos, end_pos):
+        board[end_pos[0]][end_pos[1]] = board[start_pos[0]][start_pos[1]]
+        board[start_pos[0]][start_pos[1]] = '--'
+
+# Example usage
+start_pos = (0, 0)
+end_pos = (0, 1)
+move_piece(board, start_pos, end_pos)
